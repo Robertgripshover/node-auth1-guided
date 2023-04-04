@@ -1,10 +1,27 @@
 const express = require('express')
 
+const bcrypt = require('bcryptjs')
+
 const router = express.Router()
+
+const User = require('../users/users-model')
 
 
 router.post('/register', async (req, res, next) => {
-    res.json({ message: 'register router working' })
+
+    try {
+        const { username, password } = req.body
+        const hash = bcrypt.hashSync(password, 8)
+        //    ^^^^ you hash the password like this
+        //the first argument of 'hashSync' is what you 
+        //want hashed. The number after is how 
+        //many times you want it hashed. 
+        const newUser = { username, password: hash }
+        const result = await User.add(newUser)
+
+    } catch (err) {
+
+    }
 })
 
 
