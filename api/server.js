@@ -1,11 +1,12 @@
 const path = require('path')
 const express = require('express')
 
+const authRouter = require('./auth/auth-router.js')
 const usersRouter = require('./users/users-router.js')
+
 
 const server = express()
 
-const authRouter = require('./auth/auth-router.js')
 
 server.use(express.static(path.join(__dirname, '../client')))
 server.use(express.json())
