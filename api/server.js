@@ -12,7 +12,7 @@ const server = express()
 server.use(express.static(path.join(__dirname, '../client')))
 server.use(express.json())
 server.use(session({
-  name: 'monkey',
+  name: 'monkey', 
   secret: 'keep it secret',
   cookie: {
     maxAge: 1000 * 60 *60, //<< this is in milli seconds

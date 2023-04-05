@@ -1,6 +1,6 @@
 const express = require('express')
 
-const bcrypt = require('bcryptjs')
+const bcryptjs = require('bcryptjs')
 
 const router = express.Router()
 
@@ -29,7 +29,28 @@ router.post('/register', async (req, res, next) => {
 
 
 router.post('/login', async (req, res, next) => {
-    res.json({ message: 'login router working' })
+    try {
+        const { username, password } = req.body //<<< we are getting
+        //the username from the request body
+        const [user] = await User.findBy({ username }) //<<< then here
+        //we are taking a trip to the db to check if this particulr user 
+        //is in the database. the square brackets just mean it is 
+        //accepting the first one
+
+        if (user && bcryptjs.compareSync(password, user.password))//<< this is
+        //saying if the user and the bycrpty.js password matches the 
+        //one stored then start a session for the user.
+        { 
+            req.session.user = user //<< this is starting a session server side
+            res.json({ message: `welcome back, ${user.username}`})
+        } else {
+            next({ status: 401, message: 'bad credentials' })
+        }
+        
+
+    } catch (err) {
+        next(err)
+    }
 })
 
 
