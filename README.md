@@ -16,4 +16,13 @@ Guided project for **Node Auth 1** Module.
 - [ ] type `npm run seed` to populate the db.
 - [ ] type `npm run server` to start the API.
 
+ALSO NEEDED TO DOWNLOAD:
+
+`npm i connect-session-knex`
+
+`npm i express-session`
+
+`npm i bcryptjs`
+
+
 Please follow along as the instructor adds authentication to the API.

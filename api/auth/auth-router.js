@@ -67,6 +67,7 @@ router.get('/logout', async (req, res, next) => {
             if (err) {
                 res.json({ message: `you can never leave, ${username}` })
             } else {
+                res.set('Set-Cookie', 'monkey=; SameSite=Strict; Path=/; Expires=Thu, 01 Jan 1970 00:00:00')
                 res.json({ message: `Goodbye, ${username}` })
             }
         })
