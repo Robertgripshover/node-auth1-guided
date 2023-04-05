@@ -2,6 +2,9 @@ const path = require('path')
 const express = require('express')
 const session = require('express-session')
 
+const Store = require('connect-session-knex')(session)
+//^^ gives us access to perissting the db
+
 const authRouter = require('./auth/auth-router.js')
 const usersRouter = require('./users/users-router.js')
 
@@ -25,6 +28,13 @@ server.use(session({
   saveUninitialized: false, // <<< this means we can't be setting cookies
   // on any client that makes requests. We can only set a cookie on 
   //successful login
+  store: new Store({
+    knex: require('../database/db-config.js'),
+    tablename: 'sessions',
+    sidfieldname: 'sid',
+    createtable: true,
+    cleanInterval: 1000 * 60 * 60,
+  })
 }))
 
 server.use('/api/auth', authRouter)
