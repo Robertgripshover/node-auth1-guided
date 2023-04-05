@@ -61,7 +61,20 @@ router.post('/login', async (req, res, next) => {
 
 
 router.get('/logout', async (req, res, next) => {
-    res.json({ message: 'logout router working' })
+    if (req.session.user) { //<< if there is a session we can destroy it
+        const { username } = req.session.user
+        req.session.destroy(err => {
+            if (err) {
+                res.json({ message: `you can never leave, ${username}` })
+            } else {
+                res.json({ message: `Goodbye, ${username}` })
+            }
+        })
+    } else { //<< if no ression nothing to destroy
+        res.json({
+            message: 'sorry, have we met?'
+        })
+    }
 })
 
 
