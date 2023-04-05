@@ -20,6 +20,7 @@ server.use(session({
     secure: false, //<<< if this was true it would only work on https
     httpOnly: false, //<<< the js on the page CAN read the cookie
   },
+  rolling: true, //<<< so we get a fresh coookie with every login
   resave: false, //<<< don't worry about this right now just set it to false
   saveUninitialized: false, // <<< this means we can't be setting cookies
   // on any client that makes requests. We can only set a cookie on 

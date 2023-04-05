@@ -11,7 +11,7 @@ router.post('/register', async (req, res, next) => {
 
     try {
         const { username, password } = req.body
-        const hash = bcrypt.hashSync(password, 8)
+        const hash = bcryptjs.hashSync(password, 8)
         //    ^^^^ you hash the password like this
         //the first argument of 'hashSync' is what you 
         //want hashed. The number after is how 
@@ -41,7 +41,13 @@ router.post('/login', async (req, res, next) => {
         //saying if the user and the bycrpty.js password matches the 
         //one stored then start a session for the user.
         { 
+
+
             req.session.user = user //<< this is starting a session server side
+            //^^ this is a very important line
+            //it means, that a session needs to be saved for this user
+            //and a cookie needs to be set on the browser
+
             res.json({ message: `welcome back, ${user.username}`})
         } else {
             next({ status: 401, message: 'bad credentials' })
